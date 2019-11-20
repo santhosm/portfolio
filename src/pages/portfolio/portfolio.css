@@ -1,0 +1,17 @@
+.Portfolio {
+    width: 1000px;
+    left: 50px;
+    position: relative;
+    top: 200px;
+}
+.Total {
+    top: 160px;
+    position: absolute;
+    left: 50px;
+    display:flex;
+}
+.updatePortfolio {
+    position: relative;
+    top: 500px;
+    left: 142px;
+}
