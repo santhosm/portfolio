@@ -7,7 +7,7 @@ const AddModal = (props)=>{
 
     return (
       <ButtonToolbar>
-        <Button className="addotherStocks" variant="primary" onClick={() => setModalShow(true)}>
+        <Button id="buyNewStocks" className="addotherStocks" variant="primary" onClick={() => setModalShow(true)}>
           {props.children}
         </Button>
   

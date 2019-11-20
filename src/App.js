@@ -7,8 +7,13 @@ import Home from './pages/Home/Home'
 import Navigator from './Components/Navigator';
 import './App.css';
 import 'react-chat-widget/lib/styles.css';
+import Axios from './Assets/Axios-BE';
 
 class App extends Component {
+  constructor(props){
+    super(props)
+    this.PortfolioElement = React.createRef();
+  }
   state ={
     chatId: null,
   }
@@ -39,19 +44,67 @@ class App extends Component {
       elem.style.position = "relative"
       elem.setAttribute("alt", "Flower");
       const scrollandhighlight = async(elem) => {
-          elem.scrollIntoView();
-          elem.style.border = "5px solid red"
-          await this.timeout(1000);
-          elem.style.border = "none"
-       }
+        elem.scrollIntoView();
+        elem.style.border = "5px solid red"
+        await this.timeout(1000);
+        elem.style.border = "none"
+      } 
+      const click = async(id) =>{
+        try {
+          document.getElementById(id).appendChild(elem);
+          await scrollandhighlight(document.getElementById(id));
+          await this.timeout(2000);
+          document.getElementById(id).click();
+          document.getElementById(id).removeChild(elem);
+          await this.timeout(2000);
+        } catch (e){
+          console.log(e)
+        }
+    }
+    if (res.data.slots.cobrowse_accepted==="YES"  && !this.navigated) {
+      await click ("personalBanking");
+      await click ("Portfolio");        
+      this.navigated = true;
+    }
+    if (res.data.slots.continue_prev_session==="YES"  && !this.navigated) {
+      await click ("personalBanking");
+      await click ("Portfolio");        
+      this.navigated = true;
+      console.log("hello")
+      this.PortfolioElement.current.restore()
 
+    }
+    if (res.data.slots.cobrowse_accepted==="YES" && res.data.slots.buy_new_stocks){
+      let elem = document.getElementById("buyNewStocks")
+      await scrollandhighlight(elem)
+    }
+    if (res.data.slots.cobrowse_accepted==="YES" && res.data.slots.buy_existing_stocks) {
+      let elem = document.querySelectorAll(".add")
+      elem.forEach((item)=>{
+        item.classList.add("selectforcoBrowse")
+      })
+      await this.timeout(1000);
+      elem.forEach((item)=>{
+        item.classList.remove("selectforcoBrowse")
+      })      
+    }
+    if (res.data.slots.cobrowse_accepted==="YES" && res.data.slots.sell_existing_stocks) {
+      let elem = document.querySelectorAll(".sub")
+      elem.forEach((item)=>{
+        item.classList.add("selectforcoBrowse")
+      })
+      await this.timeout(1000);
+      elem.forEach((item)=>{
+        item.classList.remove("selectforcoBrowse")
+      })      
+    }
 
-      if(res.data.response) {
-        console.log(res.data.response)
-        res.data.response.forEach((prompt) => {
-          addResponseMessage(prompt)
-        });
-      }
+    if(res.data.response) {
+      console.log(res.data)
+      res.data.response.forEach((prompt) => {
+        addResponseMessage(prompt)
+      });
+    }
     }
 
   render () {
@@ -70,7 +123,7 @@ class App extends Component {
           )}/>
           <Navigator/>
           <Route exact path= '/' component ={Home} />
-          <Route path="/personal/Portfolio" component ={Portfolio} />
+          <Route path="/personal/Portfolio" render={(props) => <Portfolio {...props} ref={this.PortfolioElement} />} />
 
     </div>
     )

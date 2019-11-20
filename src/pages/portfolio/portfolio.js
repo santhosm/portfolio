@@ -26,15 +26,19 @@ class Portfolio extends Component {
             {id:1,title:"WHITING PETROLEUM CORP",symbol:"WPC",price:5,quantity:40},
             {id:2,title:"VERA BRADLEY INC",symbol:"VPI",price:5,quantity:40},
             {id:3,title:"AMERICAN ASSETS TRUST INC",symbol:"AAT",price:5,quantity:40}
-        ]
+        ],
+        count:false
     }
-    componentDidUpdate() {
-        console.log("in comp update")
-        Axios.put('/temp/-Lu6hyawNiM8VXFipoes/stocks.json',this.state.stocks)
-        .then(response=>{
-          console.log(response)
-        });
+    restore =() =>{
+      console.log("inrestor")
+      Axios.get('/temp/-Lu6hyawNiM8VXFipoes/stocks.json')
+      .then((response)=>{
+        console.log("response  "+response.data)
+        this.setState({stocks:response.data})
+      })
+      console.log(this.state)
     }
+
     componentDidMount() {
       const { match: { params } } = this.props;
       Axios.get('submit.json')
@@ -67,10 +71,6 @@ class Portfolio extends Component {
       Axios.delete('/submit/-Lu6DxbeWSyb6e0NNdSj/stocks/9/.json')
       .then(response=>console.log(response))
       .catch(error=>console.log(error))
-      // Axios.delete('/temp/-Lu6hyawNiM8VXFipoes/stocks.json')
-      // .then(response=>{
-      //   console.log(response)
-      // });  
       alert("Portfolio Updated")
     }
 
@@ -79,16 +79,33 @@ class Portfolio extends Component {
       let  stateCopy = Object.assign({}, this.state);
       stateCopy.stocks[key].quantity += 1;
       this.setState(stateCopy);
+        console.log("comp")
+        Axios.put('/temp/-Lu6hyawNiM8VXFipoes/stocks.json',this.state.stocks)
+        .then(response=>{
+          console.log(response)
+        });
     }
     deleteStock = (id)=>{
         let key = id -1 ;
         let  stateCopy = Object.assign({}, this.state);
         stateCopy.stocks[key].quantity -= 1;
         this.setState(stateCopy);
+
+          Axios.put('/temp/-Lu6hyawNiM8VXFipoes/stocks.json',this.state.stocks)
+          .then(response=>{
+            console.log(response)
+          });
+
+
     }
     addotherstocks = (stockID)=>{
       this.setState({stocks:[...this.state.stocks,this.state.listOfStocks[stockID-1]]})
+      Axios.put('/temp/-Lu6hyawNiM8VXFipoes/stocks.json',this.state.stocks)
+      .then(response=>{
+        console.log(response)
+      });
     }
+
     updateHandler = () =>{
       Axios.put('/submit/-Lu6DxbeWSyb6e0NNdSj/stocks/.json',this.state.stocks)
       .then(response=>console.log(response))
@@ -136,8 +153,8 @@ class Portfolio extends Component {
                   <TableCell align="right">{row.Symbol}</TableCell>
                   <TableCell align="right">{row.Price}</TableCell>
                   <TableCell align="right">{row.Quantity}</TableCell>
-                  <TableCell align="right"><ControllerButton click={this.addStock.bind(this,row.id)}>+</ControllerButton></TableCell>
-                  <TableCell align="right"><ControllerButton click={this.deleteStock.bind(this,row.id)}>-</ControllerButton></TableCell>
+                  <TableCell align="right"><ControllerButton name="add" click={this.addStock.bind(this,row.id)}>+</ControllerButton></TableCell>
+                  <TableCell align="right"><ControllerButton name="sub" click={this.deleteStock.bind(this,row.id)}>-</ControllerButton></TableCell>
                 </TableRow>
               ))}
             </TableBody>

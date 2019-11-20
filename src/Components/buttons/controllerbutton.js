@@ -2,7 +2,7 @@ import React from 'react';
 
 const Custombutton =(props)=>(
     <div className="customButton">
-        <button onClick={props.click}>{props.children}</button>
+        <button className={props.name} onClick={props.click}>{props.children}</button>
     </div>
 )
 
