@@ -89,7 +89,7 @@ class Portfolio extends Component {
         });
     }
     deleteStock = async (id)=>{
-        let key = id-1  ;
+        let key = id-1;
         let  stateCopy = Object.assign({}, this.state);
         stateCopy.stocks[key].quantity -= 1;
         await this.setState(stateCopy);
