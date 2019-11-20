@@ -37,14 +37,17 @@ class Portfolio extends Component {
         this.setState({stocks:response.data})
       })
       console.log(this.state)
+      this.value =true;
     }
 
     componentDidMount() {
-      const { match: { params } } = this.props;
-      Axios.get('submit.json')
-      .then(response=>{
-        this.setState({stocks:response.data["-Lu6DxbeWSyb6e0NNdSj"].stocks,listOfStocks:response.data["-Lu6DxbeWSyb6e0NNdSj"].listOfStocks})
-      })
+      if(!this.value) {
+        const { match: { params } } = this.props;
+        Axios.get('submit.json')
+        .then(response=>{
+          this.setState({stocks:response.data["-Lu6DxbeWSyb6e0NNdSj"].stocks,listOfStocks:response.data["-Lu6DxbeWSyb6e0NNdSj"].listOfStocks})
+        })
+      }
     }
     reset =() =>{
       Axios.delete('/submit/-Lu6DxbeWSyb6e0NNdSj/stocks/4/.json')
@@ -74,22 +77,22 @@ class Portfolio extends Component {
       alert("Portfolio Updated")
     }
 
-    addStock = (id) =>{
-      let key = id -1 ;
+    addStock = async(id) =>{
+      let key = id-1  ;
       let  stateCopy = Object.assign({}, this.state);
       stateCopy.stocks[key].quantity += 1;
-      this.setState(stateCopy);
+      await this.setState(stateCopy);
         console.log("comp")
         Axios.put('/temp/-Lu6hyawNiM8VXFipoes/stocks.json',this.state.stocks)
         .then(response=>{
           console.log(response)
         });
     }
-    deleteStock = (id)=>{
-        let key = id -1 ;
+    deleteStock = async (id)=>{
+        let key = id-1  ;
         let  stateCopy = Object.assign({}, this.state);
         stateCopy.stocks[key].quantity -= 1;
-        this.setState(stateCopy);
+        await this.setState(stateCopy);
 
           Axios.put('/temp/-Lu6hyawNiM8VXFipoes/stocks.json',this.state.stocks)
           .then(response=>{
