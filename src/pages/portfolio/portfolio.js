@@ -21,7 +21,12 @@ class Portfolio extends Component {
         total:0,
         showAddModal:true,
         listOfStocks: null,
-        temp: null
+        temp: null,
+        initstocks: [
+            {id:1,title:"WHITING PETROLEUM CORP",symbol:"WPC",price:5,quantity:40},
+            {id:2,title:"VERA BRADLEY INC",symbol:"VPI",price:5,quantity:40},
+            {id:3,title:"AMERICAN ASSETS TRUST INC",symbol:"AAT",price:5,quantity:40}
+        ]
     }
     componentDidUpdate() {
         console.log("in comp update")
@@ -36,6 +41,37 @@ class Portfolio extends Component {
       .then(response=>{
         this.setState({stocks:response.data["-Lu6DxbeWSyb6e0NNdSj"].stocks,listOfStocks:response.data["-Lu6DxbeWSyb6e0NNdSj"].listOfStocks})
       })
+    }
+    reset =() =>{
+      Axios.delete('/submit/-Lu6DxbeWSyb6e0NNdSj/stocks/4/.json')
+      .then(response=>console.log(response))
+      .catch(error=>console.log(error))
+      Axios.delete('/submit/-Lu6DxbeWSyb6e0NNdSj/stocks/3/.json')
+      .then(response=>console.log(response))
+      .catch(error=>console.log(error))
+      Axios.delete('/submit/-Lu6DxbeWSyb6e0NNdSj/stocks/5/.json')
+      .then(response=>console.log(response))
+      .catch(error=>console.log(error))
+      Axios.delete('/submit/-Lu6DxbeWSyb6e0NNdSj/stocks/6/.json')
+      .then(response=>console.log(response))
+      .catch(error=>console.log(error))
+      Axios.delete('/submit/-Lu6DxbeWSyb6e0NNdSj/stocks/7/.json')
+      .then(response=>console.log(response))
+      .catch(error=>console.log(error))
+      Axios.delete('/submit/-Lu6DxbeWSyb6e0NNdSj/stocks/5/.json')
+      .then(response=>console.log(response))
+      .catch(error=>console.log(error))
+      Axios.delete('/submit/-Lu6DxbeWSyb6e0NNdSj/stocks/8/.json')
+      .then(response=>console.log(response))
+      .catch(error=>console.log(error))
+      Axios.delete('/submit/-Lu6DxbeWSyb6e0NNdSj/stocks/9/.json')
+      .then(response=>console.log(response))
+      .catch(error=>console.log(error))
+      // Axios.delete('/temp/-Lu6hyawNiM8VXFipoes/stocks.json')
+      // .then(response=>{
+      //   console.log(response)
+      // });  
+      alert("Portfolio Updated")
     }
 
     addStock = (id) =>{
@@ -118,6 +154,7 @@ class Portfolio extends Component {
                <AddModal addingShare={this.addotherstocks}>Buy New Stocks</AddModal>
                 {content}
               <Button className="updatePortfolio" onClick={this.updateHandler}>Update Portfolio</Button>
+              <Button className="updatePortfolio" onClick ={this.reset}>reset</Button>
             </div>
         )
     }
