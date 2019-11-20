@@ -123,6 +123,7 @@ class App extends Component {
           )}/>
           <Navigator/>
           <Route exact path= '/' component ={Home} />
+          <Route exact path= '/home' component ={Home} />
           <Route path="/personal/Portfolio" render={(props) => <Portfolio {...props} ref={this.PortfolioElement} />} />
 
     </div>

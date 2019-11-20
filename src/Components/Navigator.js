@@ -27,6 +27,7 @@ class Navigator extends Component {
                         : null
         }
         <button className='tabLinks' >Ways to Bank</button>
+        <span className="user">TOM</span>
     </Aux>)
     }
 }

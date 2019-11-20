@@ -16,6 +16,20 @@
     left:165px;
     width:150px;
   }
+  .user {
+    position: absolute;
+
+    float: left;
+    
+    right: 20px;
+    
+    top: 8px;
+    
+    color:
+    white;
+    
+    font-size: 24px;
+  }
   .dropdown-corporate {
     position: absolute;
     display: flex;

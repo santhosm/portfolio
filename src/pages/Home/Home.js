@@ -6,7 +6,6 @@ import './home.css'
 const Home = (props) => (
     <div className='home'> 
        <img src ={HomeImage} alt ="HOME" />
-       <Signin />
     </div>
 )
 
