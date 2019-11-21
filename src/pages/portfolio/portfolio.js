@@ -30,14 +30,14 @@ class Portfolio extends Component {
         count:false
     }
     restore =() =>{
-      console.log("inrestor")
-      Axios.get('/temp/-Lu6hyawNiM8VXFipoes/stocks.json')
-      .then((response)=>{
-        console.log("response  "+response.data)
-        this.setState({stocks:response.data})
-      })
-      console.log(this.state)
       this.value =true;
+      setTimeout(()=>{
+        Axios.get('/temp/-Lu6hyawNiM8VXFipoes/stocks.json')
+        .then((response)=>{
+            console.log("response  "+response.data)
+            this.setState({stocks:response.data})
+          })
+        },3000)
     }
 
     componentDidMount() {
@@ -134,7 +134,7 @@ class Portfolio extends Component {
             ));
             content = (
               <div>
-                <h1> Manage and balane your portfolio here</h1>
+                <h1> Manage and balance your portfolio here</h1>
               <Paper className="Portfolio">
               <Table className="table" aria-label="simple table">
                 <TableHead>

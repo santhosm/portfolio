@@ -67,6 +67,8 @@ class App extends Component {
       this.navigated = true;
     }
     if (res.data.slots.continue_prev_session==="YES"  && !this.navigated) {    
+      await click ("personalBanking");
+      await click ("Portfolio");   
       this.navigated = true;
       console.log("hello")
       this.PortfolioElement.current.restore()
